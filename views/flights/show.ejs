@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flights</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+<body>
+    <nav>
+    <a href="http://localhost:3000/flights/new"class="active">ADD FLIGHT</a>
+    <a href="http://localhost:3000/flights"class="active">ALL FLIGHT</a>
+    </nav>
+<main>
+    <h1>Flight Details</h1>
+    <section id="show-page">
+        <div>Airline: </div>
+        <div><%= flight.airline %></div>
+        <div>Flight No:</div>
+        <div><%= flight.flightNo %></div>
+        <div>Airport:</div>
+        <div><%= flight.airport%></div>
+        <div>Arriving:</div>
+        <div><%= flight.arriving ? 'Yes' : 'No' %></div>
+        <div>Departs:</div>
+        <div><%= flight.departs %></div>
+ </section>
+
+ <form action="/flights/<%= flight._id %>/tickets/new" method="POST" id="ticketId" >
+  <div><input type="text" name="seat" required pattern="[A-F][1-9]\d?"></div>
+  <div><input type="text" name="price"></div>
+  <div><input type="submit" value="New Ticket"></div>
+</form>
+ 
+<br><br>
+ <h2>Destinations</h2>
+ <form id="add-destination-form" method="POST" action="/flights/<%= flight._id %>/destinations">
+  <label>Destination</label>
+   <select name="arrival">
+     <option value="AUS">AUS</option>
+     <option value="DFW">DFW</option>
+     <option value="DEN">DEN</option>
+     <option value="LAX">LAX</option>
+     <option value="SAN">SAN</option>
+   </select>
+   <input type="submit" value="Add destination">
+ </form>
+ 
+ <% if (flight.destinations.length) { %>
+     <table>
+       <thead>
+         <tr>
+           <th>Destinations</th>
+         </tr>
+       </thead>
+       <tbody>
+         <% flight.destinations.forEach(function(d) { %>
+           <tr>
+             <td><%= d.airport %></td>
+             <td><%= d.arrival %></td>
+           </tr>
+         <% }); %>
+       </tbody>
+     </table>
+   <% } else { %>
+     <h5>No destination</h5>
+   <% } %>
+   
+ </main>
+ </body>
+ </html>
+
+
+   
+ 
